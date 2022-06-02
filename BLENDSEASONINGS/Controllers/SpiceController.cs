@@ -7,5 +7,6 @@ namespace BLENDSEASONINGS.Controllers
     [ApiController]
     public class SpiceController : ControllerBase
     {
+   
     }
 }

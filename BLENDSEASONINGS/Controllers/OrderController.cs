@@ -15,5 +15,12 @@ namespace BLENDSEASONINGS.Controllers
         {
             _orderRepo = orderRepo;
         }
+        [HttpGet]
+        public IActionResult GetOrders()
+        {
+            List<Order> orders = _orderRepo.GetAllOrders();
+            if(orders == null) return NotFound();
+            return Ok(orders);
+        }
     }
 }
