@@ -30,7 +30,17 @@ namespace BLENDSEASONINGS.Repos
                 {
                     cmd.CommandText = @"
                                         SELECT
-                                            Id, UserId, Total, CardNum, Expiration, NameOnCard, BillingZip, Address, phone, date, weight
+                                            Id,
+                                            UserId,
+                                            Total,
+                                            CardNum,
+                                            Expiration,
+                                            NameOnCard,
+                                            BillingZip,
+                                            Address,
+                                            Phone,
+                                            Date,
+                                            Weight
                                         FROM [Order]
                                         ";
                     SqlDataReader reader = cmd.ExecuteReader();
