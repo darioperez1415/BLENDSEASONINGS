@@ -1,6 +1,10 @@
-﻿namespace BLENDSEASONINGS.Repos
+﻿using BLENDSEASONINGS.Models;
+
+namespace BLENDSEASONINGS.Repos
 {
-    public interface SpiceRepository
+    public interface ISpiceRepository
     {
+        List<Spice> GetAllSpices();
+        Spice GetSpiceById(int id);
     }
 }
