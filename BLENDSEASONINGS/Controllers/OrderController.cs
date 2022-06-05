@@ -64,5 +64,22 @@ namespace BLENDSEASONINGS.Controllers
                 return Ok(order);
             }
         }
+
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            _orderRepo.DeleteOrder(id);
+        }
+
+        [HttpGet("user/{userId}")]
+        public IActionResult GetOrderByUserId(string userId)
+        {
+            var matches = _orderRepo.GetOrdersByUserId(userId);
+            if (matches == null)
+            {
+                return NotFound();
+            }
+            return Ok(matches);
+        }
     }
 }
