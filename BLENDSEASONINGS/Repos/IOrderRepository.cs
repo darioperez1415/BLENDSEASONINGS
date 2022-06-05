@@ -8,5 +8,7 @@ namespace BLENDSEASONINGS.Repos
         Order GetOrderById(int Id);
         void CreateOrder(Order order);
         void UpdateOrder(Order order);
+        void DeleteOrder(int id);
+        List<Order> GetOrdersByUserId(string UserId);
     }
 }
