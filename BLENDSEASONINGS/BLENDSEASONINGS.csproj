@@ -15,4 +15,8 @@
     <Folder Include="SqlQueries\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="BLENDSClient.esproj" />
+  </ItemGroup>
+
 </Project>
