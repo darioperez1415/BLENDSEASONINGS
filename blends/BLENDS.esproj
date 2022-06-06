@@ -11,10 +11,10 @@
     <Script Include="**" Exclude="*.esproj;**\node_modules\**" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="api\" />
-    <Folder Include="componesnts\" />
-    <Folder Include="views\" />
-    <Folder Include="routes\" />
+    <Folder Include="src\api\" />
+    <Folder Include="src\components\" />
+    <Folder Include="src\routes\" />
+    <Folder Include="src\views\" />
   </ItemGroup>
   <!-- This target is copied from the ASP.NET SPA template in order to ensure node_modules are in place. -->
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
