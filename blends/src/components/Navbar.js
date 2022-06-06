@@ -8,7 +8,7 @@ function Navbar() {
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container-fluid">
                 <a className="navbar-brand" href="#">
-                    Joe's Hot Dogs
+                    BLENDSEASONINGS
                 </a>
                 <button
                     className="navbar-toggler"
