@@ -1,6 +1,5 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/js/src/collapse";
 import { signOutUser } from "../api/auth/auth";
 
 function Navbar() {
@@ -8,7 +7,7 @@ function Navbar() {
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container-fluid">
                 <a className="navbar-brand" href="#">
-                    BLENDSEASONINGS
+                    BLEND SEASONINGS
                 </a>
                 <button
                     className="navbar-toggler"
