@@ -3,10 +3,8 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import Routing from "./routes";
 import Navbar from "./components/Navbar";
-import "./App.css";
+//import "./App.css";
 import Login from "./views/Login";
-
-
 
 function App() {
     const [user, setUser] = useState(null);
@@ -27,10 +25,6 @@ function App() {
                     isAdmin: false,
                 };
                 setUser(userInfoObj);
-
-
-
-
             } else if (user || user === null) {
                 setUser(false);
             }

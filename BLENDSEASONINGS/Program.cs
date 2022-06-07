@@ -1,6 +1,7 @@
 using BLENDSEASONINGS.Repos;
 
 var builder = WebApplication.CreateBuilder(args);
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 // Add services to the container.
 
@@ -10,6 +11,15 @@ builder.Services.AddTransient<IOrderRepository, OrderRepository>();
 builder.Services.AddTransient<ISpiceRepository, SpiceRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("https://localhost:3001").AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                      });
+});
 
 var app = builder.Build();
 
