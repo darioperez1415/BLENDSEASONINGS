@@ -13,6 +13,7 @@
   <ItemGroup>
     <Folder Include="public\" />
     <Folder Include="src\api\auth\" />
+    <Folder Include="src\api\" />
     <Folder Include="src\components\" />
     <Folder Include="src\routes\" />
     <Folder Include="src\views\" />
