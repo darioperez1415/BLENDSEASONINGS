@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
 export default function SpiceCard({ spice }) {
+    console.warn(spice);
   const navigate = useNavigate();
   const handleInfo = () => {
     navigate(`/Spice/${spice.id}`);
@@ -17,8 +18,6 @@ export default function SpiceCard({ spice }) {
         ></img>
         <div className="card-body">
           <h5 className="card-title">{spice.name}</h5>
-          <p className="card-text">Peight{spice.weight}</p>
-          <p className="card-text">Price:{spice.price}</p>
           <button type="button" className="btn btn-info" onClick={handleInfo}>
             {" "}
             Info
@@ -30,11 +29,5 @@ export default function SpiceCard({ spice }) {
 }
 
 SpiceCard.propTypes = {
-    spice: PropTypes.shape({
-    id: PropTypes.number,
-    name:PropTypes.string,
-    weight: PropTypes.number,
-    price: PropTypes.number,
-    imageUrl: PropTypes.string,
-  }),
+    spice: PropTypes.shape({})
 };
