@@ -22,6 +22,7 @@ export default function SpiceCard({ spice }) {
             {" "}
             Info
           </button>
+
         </div>
       </div>
     </>
