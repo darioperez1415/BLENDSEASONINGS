@@ -28,7 +28,12 @@ function Navbar() {
                         <a className="nav-link" href="/Menu">
                             Menu
                         </a>
-
+                        <a className="nav-link" href="/Blends">
+                            Blends
+                        </a>
+                        <a className="nav-link" href="/Custom">
+                            Custom
+                        </a>
                         <a className="nav-link" href="/Orders">
                             Orders
                         </a>

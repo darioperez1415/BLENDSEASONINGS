@@ -19,6 +19,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddTransient<IOrderRepository, OrderRepository>();
 builder.Services.AddTransient<ISpiceRepository, SpiceRepository>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -33,7 +34,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
 app.UseCors(MyAllowSpecificOrigins);
+
 app.UseAuthorization();
 
 app.MapControllers();
