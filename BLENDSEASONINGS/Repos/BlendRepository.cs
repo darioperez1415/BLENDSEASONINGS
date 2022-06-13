@@ -54,5 +54,28 @@ namespace BLENDSEASONINGS.Repos
                 }
             }
         }
+        public void CreateBlendOrder(Blend blendOrder)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                    INSERT INTO Blend
+                    (Name, Weight)
+                    OUTPUT INSERTED.ID
+                    VALUES (@Name, @Weight);
+                    ";
+
+                    cmd.Parameters.AddWithValue("@Name", blendOrder.Name);
+                    cmd.Parameters.AddWithValue("@Weight", blendOrder.Weight); ;
+
+                    int id = (int)cmd.ExecuteScalar();
+
+                    blendOrder.Id = id;
+                }
+            }
+        }
     }
 }
