@@ -217,7 +217,6 @@ namespace BLENDSEASONINGS.Repos
             }
         }
         //Delete FROM Cart -- dont need update
-
         public void UpdateOrder(Order order)
         {
             using (SqlConnection conn = Connection)
