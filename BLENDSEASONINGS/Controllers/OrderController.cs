@@ -48,8 +48,8 @@ namespace BLENDSEASONINGS.Controllers
                 return Ok(newOrder);
             }
         }
-        [HttpPost]
 
+        [HttpPost("/AddToCart/")]
         public IActionResult CreateOrderTransaction(OrderTransaction transaction)
         {
             if(transaction == null)
@@ -62,6 +62,13 @@ namespace BLENDSEASONINGS.Controllers
                 return Ok(transaction);
             }
         }
+
+        [HttpDelete("/Cart/Remove/{id}")]
+        public void RemoveFromCart(int id)
+        {
+            _orderRepo.DeleteOrderTrasaction(id);
+        }
+
         [HttpPut("{id}")]
         public IActionResult UpdateOrder(Order order)
         {

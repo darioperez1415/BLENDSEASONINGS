@@ -25,9 +25,9 @@ namespace BLENDSEASONINGS.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult SigleBlends(int id)
+        public IActionResult SingleBlends(int id)
         {
-            List<Blend> blend = _blendRepo.GetSingleBlend(id);
+            Blend blend = _blendRepo.GetSingleBlend(id);
             if (blend == null)
             {
                 return NotFound();
@@ -38,7 +38,7 @@ namespace BLENDSEASONINGS.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("/CreateNewBlend")]
         public IActionResult CreateBlendOrder(Blend blendOrder)
         {
             if (blendOrder == null) 

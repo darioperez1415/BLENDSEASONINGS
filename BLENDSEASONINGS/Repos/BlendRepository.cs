@@ -74,7 +74,7 @@ namespace BLENDSEASONINGS.Repos
                 }
             }
         }
-        public List<Blend> GetSingleBlend(int id)
+        public Blend GetSingleBlend(int id)
         {
             using (SqlConnection conn = Connection)
             {
@@ -88,19 +88,17 @@ namespace BLENDSEASONINGS.Repos
                                                 On Blend.id = Ingredient.blendId
                                                 INNER JOIN Spice
                                                 ON Ingredient.spiceId = Spice.id
-                                                WHERE Blend.id = 1";
+                                                WHERE Blend.id = @id";
 
-                    cmd.Parameters.AddWithValue("Blend.id", id);
+                    cmd.Parameters.AddWithValue("@id", id);
 
                     SqlDataReader reader = cmd.ExecuteReader();
-
-                    List<Blend> blend = new List<Blend>();
 
                     Blend currentBlend = null;
 
                     while (reader.Read())
                     {
-                        if (currentBlend == null || currentBlend.Name != reader.GetString(reader.GetOrdinal("Name")))
+                        if (currentBlend == null)
                         {
                             currentBlend = new Blend()
                             {
@@ -119,10 +117,9 @@ namespace BLENDSEASONINGS.Repos
                             ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl"))
                         };
                         currentBlend.Ingredients.Add(Ingredient);
-                    }
-                    blend.Add(currentBlend);
+                    };
                     reader.Close();
-                    return blend;
+                    return currentBlend;
                 }
             }
         }

@@ -183,15 +183,15 @@ namespace BLENDSEASONINGS.Repos
                     cmd.CommandText = @"INSERT INTO [OrderTransaction] 
                                             (
                                             blendId,
-                                            orderId,
+                                            orderId
                                             )
                                         OUTPUT INSERTED.ID
                                         VALUES (
                                             @blendId,
-                                            @orderId,
+                                            @orderId
                                             )";
-                    cmd.Parameters.AddWithValue("@blendId", transaction.blendId);
-                    cmd.Parameters.AddWithValue("@orderId", transaction.orderId);
+                    cmd.Parameters.AddWithValue("@blendId", transaction.BlendId);
+                    cmd.Parameters.AddWithValue("@orderId", transaction.OrderId);
 
                     int id = (int)cmd.ExecuteScalar();
 
@@ -199,6 +199,25 @@ namespace BLENDSEASONINGS.Repos
                 }
             }
         }
+        public void DeleteOrderTrasaction(int id)
+        {
+            using (SqlConnection conn= Connection)
+            {
+                conn.Open();
+                using(SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                        DELETE FROM [OrderTransaction]
+                                        WHERE ID = @id
+                                        ";
+                    cmd.Parameters.AddWithValue("@id",id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+        //Delete FROM Cart -- dont need update
+
         public void UpdateOrder(Order order)
         {
             using (SqlConnection conn = Connection)
