@@ -48,6 +48,20 @@ namespace BLENDSEASONINGS.Controllers
                 return Ok(newOrder);
             }
         }
+        [HttpPost]
+
+        public IActionResult CreateOrderTransaction(OrderTransaction transaction)
+        {
+            if(transaction == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                _orderRepo.CreateOrderTransaction(transaction);
+                return Ok(transaction);
+            }
+        }
         [HttpPut("{id}")]
         public IActionResult UpdateOrder(Order order)
         {

@@ -173,6 +173,32 @@ namespace BLENDSEASONINGS.Repos
                 }
             }
         }
+        public void CreateOrderTransaction(OrderTransaction transaction)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"INSERT INTO [OrderTransaction] 
+                                            (
+                                            blendId,
+                                            orderId,
+                                            )
+                                        OUTPUT INSERTED.ID
+                                        VALUES (
+                                            @blendId,
+                                            @orderId,
+                                            )";
+                    cmd.Parameters.AddWithValue("@blendId", transaction.blendId);
+                    cmd.Parameters.AddWithValue("@orderId", transaction.orderId);
+
+                    int id = (int)cmd.ExecuteScalar();
+
+                    transaction.Id = id;
+                }
+            }
+        }
         public void UpdateOrder(Order order)
         {
             using (SqlConnection conn = Connection)
