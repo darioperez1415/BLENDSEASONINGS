@@ -5,11 +5,11 @@
         public int Id { get; set; }
         public string Name{ get; set; }
         public decimal Weight  { get; set; }
-
+        public List<Spice> Ingredients { get; set; } = new List<Spice>();
     }
 }
 
-//public List<Spice> Ingredients { get; set; } = new List<Spice>();
+
 
 
 // List of spice called ingredients 

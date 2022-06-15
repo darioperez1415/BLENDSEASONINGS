@@ -23,6 +23,40 @@ namespace BLENDSEASONINGS.Controllers
             if (blends == null) return NotFound();
             return Ok(blends);
         }
+
+        [HttpGet("{id}")]
+        public IActionResult SigleBlends(int id)
+        {
+            List<Blend> blend = _blendRepo.GetSingleBlend(id);
+            if (blend == null)
+            {
+                return NotFound();
+            }
+            else
+            { 
+            return Ok(blend);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult CreateBlendOrder(Blend blendOrder)
+        {
+            if (blendOrder == null) 
+            {
+                return NotFound();
+            }
+            else
+            {
+                _blendRepo.CreateBlendOrder(blendOrder);
+                return Ok(blendOrder);
+            }
+        }
+        //[HttpPut("{id}")]
+        //public IActionResult UpdateBlendOrder(Blend blend)
+        //{
+          //  int id = blend.Id;
+            //var
+        //}
     }
 }
 
