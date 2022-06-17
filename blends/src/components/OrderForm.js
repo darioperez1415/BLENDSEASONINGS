@@ -8,8 +8,8 @@ const initialState = {
   userId: "",
   total: "",
   cardNum: "",
-  expiration: "",
   nameOnCard: "",
+  expiration: "",
   billingZip: "",
   address: "",
   phone: "",
@@ -59,8 +59,7 @@ export default function OrderForm({ obj = {} }) {
     } else {
       createOrder({
         ...formInput,
-        date: new Date(),
-        total: 0,
+        date: new Date()
       }).then((id) => {
         resetForm();
         navigate(`/CartForm/${id}`);

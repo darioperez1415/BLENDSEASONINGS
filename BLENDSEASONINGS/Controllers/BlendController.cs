@@ -51,12 +51,11 @@ namespace BLENDSEASONINGS.Controllers
                 return Ok(blendOrder);
             }
         }
-        //[HttpPut("{id}")]
-        //public IActionResult UpdateBlendOrder(Blend blend)
-        //{
-          //  int id = blend.Id;
-            //var
-        //}
+        [HttpDelete("{id}")]
+        public void DeleteBlend(int id)
+        {
+           _blendRepo.DeleteBlend(id);
+        }
     }
 }
 

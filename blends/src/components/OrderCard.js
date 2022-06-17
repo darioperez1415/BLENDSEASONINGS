@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
-import { deleteOrder, getOrdersByUserId } from "../api/orderData";
+import { deleteOrder } from "../api/orderData";
 
-export default function OrderCard({ order, setOrders }) {
-  const [blends, setBlends] = useState([]);
-
+export default function OrderCard({order , setOrders}) {
   const navigate = useNavigate();
-
   const handleClick = (method) => {
     if (method === "delete") {
       deleteOrder(order.id).then(setOrders)
@@ -15,28 +12,12 @@ export default function OrderCard({ order, setOrders }) {
       navigate(`/editOrder/${order.id}`);
     }
   };
-
-  useEffect(() => {
-    getOrdersByUserId(order.id).then((array) => {
-        setBlends(array);
-    });
-  }, []);
   return (
     <>
       <div className="card">
         <div className="card-header">
           <h4 className="card-title">Order Number: {order.id}</h4>
           <p className="card-text">Order Name: {order.nameOnCard}</p>
-          <p className="card-text">Date: {order.date}</p>
-          {
-            <>
-            <ul>{
-                blends?.map((blend) => (
-                  <li key={blend.id} >{blend.blendName}</li>
-                  ))}
-            </ul>
-            </>
-          }
           <div>
             <button
               type="button"
@@ -60,6 +41,6 @@ export default function OrderCard({ order, setOrders }) {
 }
 
 OrderCard.propTypes = {
-  order: PropTypes.shape(PropTypes.obj).isRequired,
+  order: PropTypes.shape({}),
   setOrders: PropTypes.func.isRequired,
 };

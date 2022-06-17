@@ -15,6 +15,7 @@ namespace BLENDSEASONINGS.Controllers
         {
             _orderRepo = orderRepo;
         }
+
         [HttpGet]
         public IActionResult GetOrders()
         {
@@ -35,7 +36,18 @@ namespace BLENDSEASONINGS.Controllers
             return Ok(match);
         }
 
-        [HttpPost]
+        [HttpGet("user/{userId}")]
+        public IActionResult GetOrderByUserId(string userId)
+        {
+            var matches = _orderRepo.GetOrdersByUserId(userId);
+            if (matches == null)
+            {
+                return NotFound();
+            }
+            return Ok(matches);
+        }
+
+        [HttpPost("/CreatOrder")]
         public IActionResult CreateNewOrder(Order newOrder)
         {
             if (newOrder == null)
@@ -47,26 +59,6 @@ namespace BLENDSEASONINGS.Controllers
                 _orderRepo.CreateOrder(newOrder);
                 return Ok(newOrder);
             }
-        }
-
-        [HttpPost("/AddToCart/")]
-        public IActionResult CreateOrderTransaction(OrderTransaction transaction)
-        {
-            if(transaction == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                _orderRepo.CreateOrderTransaction(transaction);
-                return Ok(transaction);
-            }
-        }
-
-        [HttpDelete("/Cart/Remove/{id}")]
-        public void RemoveFromCart(int id)
-        {
-            _orderRepo.DeleteOrderTrasaction(id);
         }
 
         [HttpPut("{id}")]
@@ -92,15 +84,24 @@ namespace BLENDSEASONINGS.Controllers
             _orderRepo.DeleteOrder(id);
         }
 
-        [HttpGet("user/{userId}")]
-        public IActionResult GetOrderByUserId(string userId)
+        [HttpPost("/AddToCart/")]
+        public IActionResult CreateOrderTransaction(OrderTransaction transaction)
         {
-            var matches = _orderRepo.GetOrdersByUserId(userId);
-            if (matches == null)
+            if(transaction == null)
             {
                 return NotFound();
             }
-            return Ok(matches);
+            else
+            {
+                _orderRepo.CreateOrderTransaction(transaction);
+                return Ok(transaction);
+            }
+        }
+
+        [HttpDelete("/Remove/{id}")]
+        public void RemoveFromCart(int id)
+        {
+            _orderRepo.DeleteOrderTrasaction(id);
         }
     }
 }

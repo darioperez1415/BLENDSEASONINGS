@@ -5,7 +5,7 @@ const baseURL = "https://localhost:7060/api";
 const getAllOrders = () =>
   new Promise((resolve, reject) => {
     axios
-      .get(`${baseURL}/orders`)
+      .get(`${baseURL}/Order`)
       .then((response) => resolve(Object.values(response.data)))
       .catch(reject);
   });
@@ -13,7 +13,7 @@ const getAllOrders = () =>
 const getSingleOrder = (id) =>
   new Promise((resolve, reject) => {
     axios
-      .get(`${baseURL}/orders/${id}`)
+      .get(`${baseURL}/Order/${id}`)
       .then((response) => resolve(response.data))
       .catch(reject);
   });
@@ -21,15 +21,15 @@ const getSingleOrder = (id) =>
 const getOrdersByUserId = (userId) =>
   new Promise((resolve, reject) => {
     axios
-      .get(`${baseURL}/orders/user/${userId}`)
+      .get(`${baseURL}/Order/user/${userId}`)
       .then((response) => resolve(Object.values(response.data)))
       .catch(reject);
   });
-  
+
 const createOrder = (newOrder) =>
   new Promise((resolve, reject) => {
     axios
-      .post(`${baseURL}/orders`, newOrder)
+      .post(`${baseURL}/Order`, newOrder)
       .then((response) => {
         resolve(response.data.id);
       })
@@ -39,17 +39,17 @@ const createOrder = (newOrder) =>
 const updateOrder = (orderObj) =>
   new Promise((resolve, reject) => {
     axios
-      .put(`${baseURL}/orders/${orderObj.id}`, orderObj)
-      .then(() =>getOrdersByUserId(orderObj.userId).then(resolve))
+      .put(`${baseURL}/Order/${orderObj.id}`, orderObj)
+      .then(() =>getAllOrders(orderObj.id).then(resolve))
     
       .catch(reject);
   });
 
-const deleteOrder = (id, userId) =>
+const deleteOrder = (id) =>
   new Promise((resolve, reject) => {
     axios
-      .delete(`${baseURL}/orders/${id}`)
-      .then(() => getOrdersByUserId(userId).then(resolve))
+      .delete(`${baseURL}/Order/${id}`)
+      .then(() => getAllOrders(id).then(resolve))
       .catch(reject);
   });
 

@@ -146,28 +146,22 @@ namespace BLENDSEASONINGS.Repos
                 }
             }
         }
+        public void DeleteBlend(int id)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                        DELETE FROM Blend
+                                        WHERE id =@id
+                                       ";
+                    cmd.Parameters.AddWithValue("@id", id);
 
-        //public void UpdateBlendOrder(Blend blend)
-        //{
-        //    using (SqlConnection conn = Connection)
-        //    {
-        //        conn.Open();
-        //        using (SqlCommand cmd = conn.CreateCommand())
-        //        {
-        //            cmd.CommandText = @"
-        //                    UPDATE [BLEND]
-        //                    SET 
-        //                         Name = @name,
-        //                         weight = @weight
-        //                    WHERE ID = @id;                           
-                                   
-        //                ";
-        //            cmd.Parameters.AddWithValue("@name", blend.Name);
-        //            cmd.Parameters.AddWithValue("@weight", blend.Weight);
-
-        //            cmd.ExecuteNonQuery();
-        //        }
-        //    }
-        //}
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }
