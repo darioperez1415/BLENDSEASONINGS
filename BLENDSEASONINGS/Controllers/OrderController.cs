@@ -47,7 +47,7 @@ namespace BLENDSEASONINGS.Controllers
             return Ok(matches);
         }
 
-        [HttpPost("/CreatOrder")]
+        [HttpPost()]
         public IActionResult CreateNewOrder(Order newOrder)
         {
             if (newOrder == null)

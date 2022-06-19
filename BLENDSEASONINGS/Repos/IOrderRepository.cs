@@ -6,7 +6,7 @@ namespace BLENDSEASONINGS.Repos
     {
         public List<Order> GetAllOrders();
         Order GetOrderById(int id);
-        void CreateOrder(Order order);
+        void CreateOrder(Order newOrder);
         void CreateOrderTransaction(OrderTransaction transaction);
         void DeleteOrderTrasaction(int id);
         void UpdateOrder(Order order);

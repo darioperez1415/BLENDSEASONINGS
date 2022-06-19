@@ -27,9 +27,9 @@ const getOrdersByUserId = (userId) =>
   });
 
 const createOrder = (newOrder) =>
-  new Promise((resolve, reject) => {
+  new Promise((resolve,reject) => {
     axios
-      .post(`${baseURL}/Order`, newOrder)
+      .post(`${baseURL}/Order`,newOrder)
       .then((response) => {
         resolve(response.data.id);
       })

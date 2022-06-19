@@ -132,8 +132,7 @@ namespace BLENDSEASONINGS.Repos
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"INSERT INTO [Order] 
-                                            (Id,
-                                            UserId,
+                                           (UserId,
                                             Total,
                                             CardNum,
                                             Expiration,
@@ -144,7 +143,7 @@ namespace BLENDSEASONINGS.Repos
                                             Date,
                                             Weight)
                                         OUTPUT INSERTED.ID
-                                        VALUES (@Id,
+                                        VALUES (
                                             @UserId,
                                             @Total,
                                             @CardNum,

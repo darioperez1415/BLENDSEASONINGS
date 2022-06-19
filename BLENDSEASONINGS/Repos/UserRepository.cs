@@ -96,7 +96,7 @@ namespace BLENDSEASONINGS.Repos
             }
         }
 
-        public void AddUser(User user)
+        public void AddUser(User newUser)
         {
             using (SqlConnection conn = Connection)
             {
@@ -109,11 +109,11 @@ namespace BLENDSEASONINGS.Repos
                         VALUES (@id, @firstName, @lastName, @email, @isAdmin);
                     ";
 
-                    cmd.Parameters.AddWithValue("@id", user.Id);
-                    cmd.Parameters.AddWithValue("@firstName", user.FirstName);
-                    cmd.Parameters.AddWithValue("@lastName", user.LastName);
-                    cmd.Parameters.AddWithValue("@email", user.Email);
-                    cmd.Parameters.AddWithValue("@isAdmin", user.IsAdmin);
+                    cmd.Parameters.AddWithValue("@id", newUser.Id);
+                    cmd.Parameters.AddWithValue("@firstName", newUser.FirstName);
+                    cmd.Parameters.AddWithValue("@lastName", newUser.LastName);
+                    cmd.Parameters.AddWithValue("@email", newUser.Email);
+                    cmd.Parameters.AddWithValue("@isAdmin", newUser.IsAdmin);
 
                     cmd.ExecuteNonQuery();
 

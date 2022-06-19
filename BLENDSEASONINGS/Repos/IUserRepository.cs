@@ -6,7 +6,7 @@ namespace BLENDSEASONINGS.Repos
     {
         List<User> GetUsers();
         User GetUserById(string id);
-        void AddUser(User user);
+        void AddUser(User newUser);
         void UpdateUser(User user);
         void DeleteUser(string id);
     }

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
-import { createOrder, updateOrder } from "../api/orderData";
+import { createOrder, updateOrder} from "../api/orderData";
 import "bootstrap/js/src/collapse";
+//import getCurrentUsersUid from "../helpers/helpers";
 
 const initialState = {
   userId: "",
-  total: "",
+  total: 0,
   cardNum: "",
   nameOnCard: "",
   expiration: "",
@@ -14,11 +15,13 @@ const initialState = {
   address: "",
   phone: "",
   date: "",
-  weight:""
+  weight: 0
 };
+
 export default function OrderForm({ obj = {} }) {
   const [formInput, setFormInput] = useState(initialState);
   const navigate = useNavigate();
+  //const UID = getCurrentUsersUid();
 
   useEffect(() => {
     if (obj.id) {
@@ -51,21 +54,20 @@ export default function OrderForm({ obj = {} }) {
   };
   const handleClick = (e) => {
     e.preventDefault();
-
     if (obj.id) {
-      updateOrder(formInput).then((res) => {
-        navigate(`/CartForm/${formInput.id}`);
+      updateOrder(formInput).then(() => {
+        navigate(`/`);
       });
     } else {
-      createOrder({
-        ...formInput,
-        date: new Date()
-      }).then((id) => {
-        resetForm();
-        navigate(`/CartForm/${id}`);
-      });
-    }
-  };
+      console.log(formInput);
+        createOrder(
+          formInput
+        ).then(() => {
+          resetForm();
+          navigate(`/Order`);
+        });
+      };
+    };
   return (
     <form onSubmit={handleClick}>
       <div className="form-group">
@@ -148,7 +150,7 @@ export default function OrderForm({ obj = {} }) {
       </div>
 
       <button type="submit" className="btn btn-primary">
-        {obj.id ? "Update Spice" : "Add Spice!"}
+        {obj.id ? "Update Order" : "Checkout"}
       </button>
     </form>
   );

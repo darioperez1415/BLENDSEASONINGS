@@ -7,6 +7,7 @@ export default function SpiceCard({ spice }) {
   const handleInfo = () => {
     navigate(`/Spice/${spice.id}`);
   };
+  
   return (
     <>
       <div className="spiceCard" style={{ width: "18rem" }}>

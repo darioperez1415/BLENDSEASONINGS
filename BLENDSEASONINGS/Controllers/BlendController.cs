@@ -38,7 +38,7 @@ namespace BLENDSEASONINGS.Controllers
             }
         }
 
-        [HttpPost("/CreateNewBlend")]
+        [HttpPost()]
         public IActionResult CreateBlendOrder(Blend blendOrder)
         {
             if (blendOrder == null) 
