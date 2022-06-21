@@ -1,4 +1,9 @@
 using BLENDSEASONINGS.Repos;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -24,7 +29,25 @@ builder.Services.AddTransient<IBlendRepository, BlendRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//Auth
+FirebaseApp.Create(new AppOptions()
+{
+    Credential = GoogleCredential.FromFile(builder.Configuration["fbCredPath"]),
+});
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    options.IncludeErrorDetails = true;
+    options.Authority = "https://securetoken.google.com/blendseasongings"; //use your project name
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidIssuer = "https://securetoken.google.com/blendseasongings", //use your project name
+        ValidateAudience = true,
+        ValidAudience = "blendseasongings",  //use your project name
+        ValidateLifetime = true,
+    };
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -36,8 +59,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors(MyAllowSpecificOrigins);
+app.UseCors(builder => { builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin(); });
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

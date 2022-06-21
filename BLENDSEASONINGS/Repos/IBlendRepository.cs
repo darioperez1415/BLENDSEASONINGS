@@ -8,5 +8,6 @@ namespace BLENDSEASONINGS.Repos
          Blend GetSingleBlend(int id);
          public void CreateBlendOrder(Blend blendOrder);
          public void DeleteBlend(int id);
+        public List<Blend> GetBlendsByOrderId(int orderId);  
     }
 }

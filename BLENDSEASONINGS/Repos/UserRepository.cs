@@ -19,7 +19,7 @@ namespace BLENDSEASONINGS.Repos
                 return new SqlConnection(_config.GetConnectionString("DefaultConnection"));
             }
         }
-        public List<User> GetUsers()
+        public List<User> GetAllUsers(SqlDataReader read)
         {
             using (SqlConnection conn = Connection)
             {
@@ -27,27 +27,20 @@ namespace BLENDSEASONINGS.Repos
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT u.id,
-                               u.firstName,
-                               u.lastName,
-                               u.email,
-                               u.isAdmin
-                        FROM [User] u
-                    ";
-
+                                      SELECT 
+                                        id
+                                      FROM [User]
+                                      ";
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     List<User> users = new List<User>();
                     while (reader.Read())
                     {
-                        User user = new User
+                        User user = new User()
                         {
-                            Id = reader.GetString(reader.GetOrdinal("id")),
-                            FirstName = reader.GetString(reader.GetOrdinal("firstName")),
-                            LastName = reader.GetString(reader.GetOrdinal("lastName")),
-                            Email = reader.GetString(reader.GetOrdinal("email")),
-                            IsAdmin = reader.GetBoolean(reader.GetOrdinal("isAdmin"))
+                            Id = reader.GetString(reader.GetOrdinal("id"))
                         };
+
                         users.Add(user);
                     }
                     reader.Close();
@@ -57,6 +50,51 @@ namespace BLENDSEASONINGS.Repos
             }
         }
 
+
+
+        public void CreateUser(User user)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                       INSERT INTO [User] (id)
+                                       VALUES (@id);
+                                    ";
+                    cmd.Parameters.AddWithValue("@id", user.Id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+        public bool CheckUserExists(string id)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT id
+                                        FROM [User]
+										WHERE id = @id";
+
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        reader.Close();
+                        return false;
+                    }
+                }
+            }
+        }
         public User GetUserById(string id)
         {
             using (SqlConnection conn = Connection)
@@ -65,113 +103,21 @@ namespace BLENDSEASONINGS.Repos
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                                        SELECT * FROM [User]
-                                        WHERE Id = @id
-                                        ";
-
-                    cmd.Parameters.AddWithValue("id", id);
-
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    if (reader.Read())
-                    {
-                        User user = new User
-                        {
-                            Id = reader.GetString(reader.GetOrdinal("id")),
-                            FirstName = reader.GetString(reader.GetOrdinal("firstName")),
-                            LastName = reader.GetString(reader.GetOrdinal("lastName")),
-                            Email = reader.GetString(reader.GetOrdinal("email")),
-                            IsAdmin = reader.GetBoolean(reader.GetOrdinal("isAdmin"))
-
-                        };
-
-                        return user;
-                    }
-                    else
-                    {
-                        reader.Close();
-                        return null;
-                    }
-                }
-            }
-        }
-
-        public void AddUser(User newUser)
-        {
-            using (SqlConnection conn = Connection)
-            {
-                conn.Open();
-                using (SqlCommand cmd = conn.CreateCommand())
-                {
-                    cmd.CommandText = @"
-                        INSERT INTO [User] (Id, FirstName, LastName, Email, IsAdmin)
-                        OUTPUT INSERTED.ID
-                        VALUES (@id, @firstName, @lastName, @email, @isAdmin);
+                        SELECT * FROM [User]
+                        WHERE id = @id
                     ";
-
-                    cmd.Parameters.AddWithValue("@id", newUser.Id);
-                    cmd.Parameters.AddWithValue("@firstName", newUser.FirstName);
-                    cmd.Parameters.AddWithValue("@lastName", newUser.LastName);
-                    cmd.Parameters.AddWithValue("@email", newUser.Email);
-                    cmd.Parameters.AddWithValue("@isAdmin", newUser.IsAdmin);
-
-                    cmd.ExecuteNonQuery();
-
-
-                }
-            }
-        }
-
-        public void UpdateUser(User user)
-        {
-            using (SqlConnection conn = Connection)
-            {
-                conn.Open();
-
-                using (SqlCommand cmd = conn.CreateCommand())
-                {
-                    cmd.CommandText = @"
-                        UPDATE User
-                        SET
-                               Id = @id,
-                               FirstName = @firstName,
-                               LastName = @lastName,
-                               Email = @email,
-                               IsAdmin = @isAdmin
-                        
-                        WHERE  Id = @id
-                    ";
-
-                    cmd.Parameters.AddWithValue("@id", user.Id);
-                    cmd.Parameters.AddWithValue("@firstName", user.FirstName);
-                    cmd.Parameters.AddWithValue("@lastName", user.LastName);
-                    cmd.Parameters.AddWithValue("@email", user.Email);
-                    cmd.Parameters.AddWithValue("@isAdmin", user.IsAdmin);
-
-                    cmd.ExecuteNonQuery();
-                }
-            }
-        }
-
-
-        public void DeleteUser(string id)
-        {
-            using (SqlConnection conn = Connection)
-            {
-                conn.Open();
-
-                using (SqlCommand cmd = conn.CreateCommand())
-                {
-                    cmd.CommandText = @"
-                            DELETE FROM User
-                            Where Id = @id
-                        ";
 
                     cmd.Parameters.AddWithValue("@id", id);
 
-                    cmd.ExecuteNonQuery();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        var user = GetAllUsers(reader).FirstOrDefault();
+                        return user;
+                    }
                 }
             }
         }
+
+
     }
 }

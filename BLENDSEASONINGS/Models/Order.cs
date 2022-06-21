@@ -13,6 +13,7 @@
         public string Phone { get; set; }
         public string Date { get; set; }
         public decimal Weight { get; set; }
+        public List <Blend> Blends { get; set; }
 
     }
 }

@@ -10,17 +10,22 @@ namespace BLENDSEASONINGS.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IOrderRepository _orderRepo;
-
-        public OrderController(IOrderRepository orderRepo)
+        private readonly IBlendRepository _blendRepository;
+        public OrderController(IOrderRepository orderRepo, IBlendRepository blendRepository)
         {
             _orderRepo = orderRepo;
+            _blendRepository = blendRepository;
         }
 
         [HttpGet]
         public IActionResult GetOrders()
         {
             List<Order> orders = _orderRepo.GetAllOrders();
-            if(orders == null) return NotFound();
+            if (orders == null) return NotFound();
+            foreach (Order order in orders)
+            {
+                order.Blends = _blendRepository.GetBlendsByOrderId(order.Id);
+            }
             return Ok(orders);
         }
 
@@ -33,6 +38,7 @@ namespace BLENDSEASONINGS.Controllers
             {
                 return NotFound();
             }
+            match.Blends = _blendRepository.GetBlendsByOrderId(match.Id);
             return Ok(match);
         }
 

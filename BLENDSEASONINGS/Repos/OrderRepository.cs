@@ -61,6 +61,7 @@ namespace BLENDSEASONINGS.Repos
                             Phone = reader.GetString(reader.GetOrdinal("Phone")),
                             Date = reader.GetString(reader.GetOrdinal("Date")),
                             Weight = (int)reader.GetDecimal(reader.GetOrdinal("Weight")),
+                            Blends = new List<Blend>()
                         };
                         orders.Add(order);
                     }

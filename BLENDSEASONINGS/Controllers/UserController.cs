@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using BLENDSEASONINGS.Repos;
 using BLENDSEASONINGS.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 
 namespace BLENDSEASONINGS.Controllers
 {
@@ -16,41 +17,42 @@ namespace BLENDSEASONINGS.Controllers
             _userRepo = userRepository;
         }
 
-        [HttpGet]
-        public IActionResult GetAllUsers()
+        // POST api/<Users>
+        [HttpPost]
+        public IActionResult CreateUser(User user)
         {
-            List<User> users = _userRepo.GetUsers();
-            if (users == null) return NotFound();
-            return Ok(users);
-        }
-
-
-        // GET: UserController/5
-        [HttpGet("{id}")]
-        public IActionResult GetUserById(string id)
-        {
-            User user = _userRepo.GetUserById(id);
-
             if (user == null)
             {
                 return NotFound();
             }
-            return Ok(user);
-        }
-
-        [HttpPost]
-        public IActionResult AddUser(User newUser)
-        {
-            if (newUser == null)
-            {
-                return NotFound();
-
-            }
             else
             {
-                _userRepo.AddUser(newUser);
-                return Ok(newUser);
+                _userRepo.CreateUser(user);
+                return Ok(user);
             }
         }
+
+        [Authorize]
+        [HttpGet("Auth")]
+        public async Task<IActionResult> GetUserAuthStatus()
+        {
+            string userId = User.FindFirst(claim => claim.Type == "user_id").Value;
+            bool userexists = _userRepo.CheckUserExists(userId);
+            if (!userexists)
+            {
+                User userFromToken = new User()
+                {
+
+                    Id = userId,
+
+                };
+
+                _userRepo.CreateUser(userFromToken);
+                return Ok();
+            }
+            User existingUser = _userRepo.GetUserById(userId);
+            return Ok(existingUser);
+        }
+
     }
 }

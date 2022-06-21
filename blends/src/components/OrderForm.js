@@ -21,7 +21,7 @@ const initialState = {
 export default function OrderForm({ obj = {} }) {
   const [formInput, setFormInput] = useState(initialState);
   const navigate = useNavigate();
-  //const UID = getCurrentUsersUid();
+ // const UID = getCurrentUsersUid();
 
   useEffect(() => {
     if (obj.id) {
@@ -60,6 +60,7 @@ export default function OrderForm({ obj = {} }) {
       });
     } else {
       console.log(formInput);
+//console.log(UID);
         createOrder(
           formInput
         ).then(() => {
