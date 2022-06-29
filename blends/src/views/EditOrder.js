@@ -5,10 +5,11 @@ import { useParams } from 'react-router-dom';
 
 function EditOrder() {
     const [editOrder, setEditOrder] = useState({});
-    const { key } = useParams();
+    const { ekey } = useParams();
 
 useEffect(() => {
-    getSingleOrder(key).then(setEditOrder);
+    getSingleOrder(ekey).then(setEditOrder);
+    console.log(ekey)
 }, []);
 
   return (

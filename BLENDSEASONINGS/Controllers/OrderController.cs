@@ -7,14 +7,14 @@ namespace BLENDSEASONINGS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrderController : ControllerBase
+    public class OrdersController : Controller
     {
+
         private readonly IOrderRepository _orderRepo;
-        private readonly IBlendRepository _blendRepository;
-        public OrderController(IOrderRepository orderRepo, IBlendRepository blendRepository)
+
+        public OrdersController(IOrderRepository orderRepo)
         {
             _orderRepo = orderRepo;
-            _blendRepository = blendRepository;
         }
 
         [HttpGet]
@@ -22,10 +22,6 @@ namespace BLENDSEASONINGS.Controllers
         {
             List<Order> orders = _orderRepo.GetAllOrders();
             if (orders == null) return NotFound();
-            foreach (Order order in orders)
-            {
-                order.Blends = _blendRepository.GetBlendsByOrderId(order.Id);
-            }
             return Ok(orders);
         }
 
@@ -38,22 +34,10 @@ namespace BLENDSEASONINGS.Controllers
             {
                 return NotFound();
             }
-            match.Blends = _blendRepository.GetBlendsByOrderId(match.Id);
             return Ok(match);
         }
 
-        [HttpGet("user/{userId}")]
-        public IActionResult GetOrderByUserId(string userId)
-        {
-            var matches = _orderRepo.GetOrdersByUserId(userId);
-            if (matches == null)
-            {
-                return NotFound();
-            }
-            return Ok(matches);
-        }
-
-        [HttpPost()]
+        [HttpPost]
         public IActionResult CreateNewOrder(Order newOrder)
         {
             if (newOrder == null)
@@ -82,7 +66,10 @@ namespace BLENDSEASONINGS.Controllers
                 _orderRepo.UpdateOrder(order);
                 return Ok(order);
             }
+
         }
+
+
 
         [HttpDelete("{id}")]
         public void Delete(int id)
@@ -90,24 +77,68 @@ namespace BLENDSEASONINGS.Controllers
             _orderRepo.DeleteOrder(id);
         }
 
-        [HttpPost("/AddToCart/")]
-        public IActionResult CreateOrderTransaction(OrderTransaction transaction)
+        [HttpGet("user/{userId}")]
+        public IActionResult GetOrderByUserId(string userId)
         {
-            if(transaction == null)
+            var matches = _orderRepo.GetOrdersByUserId(userId);
+            if (matches == null)
+            {
+                return NotFound();
+            }
+            return Ok(matches);
+        }
+
+
+
+        [HttpGet("blendOrder/{orderId}")]
+        public IActionResult GetBlendOrderByOrderId(int orderId)
+        {
+            var matches = _orderRepo.GetBlendOrderByOrderId(orderId);
+            if (matches == null)
+            {
+                return NotFound();
+            }
+            return Ok(matches);
+        }
+
+
+        [HttpPost("blendOrder")]
+        public IActionResult CreateNewBlendOrder(BlendOrder newBlendOrder)
+        {
+            if (newBlendOrder == null)
             {
                 return NotFound();
             }
             else
             {
-                _orderRepo.CreateOrderTransaction(transaction);
-                return Ok(transaction);
+                _orderRepo.CreateBlendOrder(newBlendOrder);
+                return Ok(newBlendOrder);
             }
         }
 
-        [HttpDelete("/Remove/{id}")]
-        public void RemoveFromCart(int id)
+
+        [HttpPatch("blendOrder/{id}")]
+        public IActionResult UpdateBlendOrder(BlendOrder blendOrder)
         {
-            _orderRepo.DeleteOrderTrasaction(id);
+            int id = blendOrder.Id;
+            var match = _orderRepo.GetBlendOrderByOrderId(id);
+
+            if (match == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                _orderRepo.UpdateBlendOrder(blendOrder);
+                return Ok(blendOrder);
+            }
+
         }
+        [HttpDelete("blendOrder/{id}")]
+        public void DeleteBlendOrder(int id)
+        {
+            _orderRepo.DeleteBlendOrder(id);
+        }
+
     }
 }

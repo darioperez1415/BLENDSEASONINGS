@@ -10,7 +10,7 @@ const getAllBlends = () =>
       .catch(reject);
   });
 
-const getSingleBlend = (id) =>
+const getBlendById = (id) =>
   new Promise((resolve, reject) => {
     axios
       .get(`${baseURL}/Blend/${id}`)
@@ -18,18 +18,7 @@ const getSingleBlend = (id) =>
       .catch(reject);
   });
 
-const createNewBlend = (newBlend) =>
-  new Promise((resolve, reject) => {
-    axios
-      .post(`${baseURL}/CreateNewBlend`, newBlend)
-      .then((response) => {
-        resolve(response.data.id);
-      })
-      .catch(reject);
-  });
-
 export {
   getAllBlends,
-  getSingleBlend,
-  createNewBlend,
+    getBlendById
 };

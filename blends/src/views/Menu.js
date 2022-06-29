@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAllSpices } from '../api/spiceData';
-import SpiceCard from '../components/SpiceCards';
+import { getAllBlends } from '../api/blendData';
+import BlendCard from '../components/BlendCards';
 
-export default function Products() {
-    const [spices, setSpices] = useState([]);
+export default function Menu() {
+    const [blends, setBlends] = useState([]);
     const navigate = useNavigate();
     useEffect(() => {
-        getAllSpices().then((array) => {
-            setSpices(array);
+        getAllBlends().then((array) => {
+            setBlends(array);
         });
     }, []);
 
@@ -18,13 +18,13 @@ export default function Products() {
     return (
         <>
             <div>
-               <h1>SPICES!</h1>
+               <h1>Blends!</h1>
                <button type="button" className="btn-sucess" onClick={goToForm}> Create Order</button>
                 <div>
-                    {spices.map((spice) => (
-                        <SpiceCard
-                            key={spice.id}
-                            spice={spice}
+                    {blends.map((blend) => (
+                        <BlendCard
+                            key={blend.id}
+                            blend={blend}
                         />
                     ))}
                 </div>

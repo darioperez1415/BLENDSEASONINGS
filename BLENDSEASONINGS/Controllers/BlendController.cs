@@ -7,7 +7,7 @@ namespace BLENDSEASONINGS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BlendController : ControllerBase
+    public class BlendController : Controller
     {
         private readonly IBlendRepository _blendRepo;
 
@@ -15,7 +15,6 @@ namespace BLENDSEASONINGS.Controllers
         {
             _blendRepo = blendRepository;
         }
-
         [HttpGet]
         public IActionResult Index()
         {
@@ -25,37 +24,16 @@ namespace BLENDSEASONINGS.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult SingleBlends(int id)
+        public IActionResult Details(int id)
         {
-            Blend blend = _blendRepo.GetSingleBlend(id);
-            if (blend == null)
-            {
-                return NotFound();
-            }
-            else
-            { 
-            return Ok(blend);
-            }
-        }
+            var match = _blendRepo.GetBlendById(id);
 
-        [HttpPost()]
-        public IActionResult CreateBlendOrder(Blend blendOrder)
-        {
-            if (blendOrder == null) 
+            if (match == null)
             {
                 return NotFound();
             }
-            else
-            {
-                _blendRepo.CreateBlendOrder(blendOrder);
-                return Ok(blendOrder);
-            }
-        }
-        [HttpDelete("{id}")]
-        public void DeleteBlend(int id)
-        {
-           _blendRepo.DeleteBlend(id);
+
+            return Ok(match);
         }
     }
 }
-

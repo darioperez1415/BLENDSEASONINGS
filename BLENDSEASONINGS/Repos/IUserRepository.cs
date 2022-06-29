@@ -4,8 +4,10 @@ namespace BLENDSEASONINGS.Repos
 {
     public interface IUserRepository
     {
-        public void CreateUser(User user);
-        public User GetUserById(string id);
-        public bool CheckUserExists(string id);
+        List<User> GetUsers();
+        User GetUserById(string id);
+        void AddUser(User user);
+        void UpdateUser(User user);
+        void DeleteUser(string id);
     }
 }

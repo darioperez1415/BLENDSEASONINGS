@@ -9,9 +9,15 @@ export default function BlendCard({ blend }) {
   };
   return (
     <>
-      <div className="spiceCard" style={{ width: "18rem" }}>
+          <div className="spiceCard" style={{ width: "18rem" }}>
+              <img
+                  src={blend.imageUrl}
+                  className="card-img-top"
+                  alt={blend.name}
+              ></img>
         <div className="card-body">
-          <h5 className="card-title">{blend.name}</h5>
+                  <h5 className="card-title">{blend.name}</h5>
+                  <p className="card-text">{blend.ingredients}</p>
           <button type="button" className="btn btn-info" onClick={handleInfo}>
             {" "}
             Info
@@ -24,5 +30,10 @@ export default function BlendCard({ blend }) {
 }
 
 BlendCard.propTypes = {
-    blend: PropTypes.shape({})
+  blend: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    ingredients: PropTypes.string,
+    imageUrl: PropTypes.string,
+}),
 };

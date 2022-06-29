@@ -1,11 +1,13 @@
 ﻿namespace BLENDSEASONINGS.Models
 {
-    public class OrderTransaction
+    public class BlendOrder
     {
         public int Id { get; set; }
 
+        public int BlendId { get; set; }
+
         public int OrderId { get; set; }
 
-        public int BlendId { get; set; }
+        public string BlendName { get; set; }
     }
 }

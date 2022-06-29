@@ -1,17 +1,19 @@
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import * as ReactDOMClient from "react-dom/client";
+import ReactDOM from "react-dom/client";
+import firebase from "firebase/compat/app";
+import firebaseConfig from "./api/auth/apiKeys";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-const root = ReactDOMClient.createRoot(document.getElementById('root'));
+firebase.initializeApp(firebaseConfig);
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <React.StrictMode>
         <Router>
             <App />
         </Router>
-
     </React.StrictMode>
 );
 

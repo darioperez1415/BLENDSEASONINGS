@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { getAllOrders } from "../api/orderData";
+import { getOrdersByUserId } from "../api/orderData";
 import OrderCard from "../components/OrderCard";
-//import getCurrentUsersUid from "../helpers/helpers";
+import getCurrentUsersUid from "../helpers/helpers";
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
-  //const UID = getCurrentUsersUid();
+  const UID = getCurrentUsersUid();
 
   useEffect(() => {
-    getAllOrders().then((array) => {
+      getOrdersByUserId(UID).then((array) => {
       setOrders(array);
     });
   }, []);
