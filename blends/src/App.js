@@ -3,7 +3,7 @@ import "firebase/compat/auth";
 import firebase from "firebase/compat/app";
 import Routing from "./routes";
 import Navbar from "./components/Navbar";
-//import "./App.css";
+import "./main.css";
 import Login from "./views/Login";
 
 function App() {

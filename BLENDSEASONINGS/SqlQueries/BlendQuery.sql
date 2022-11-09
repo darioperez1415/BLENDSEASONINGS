@@ -1,30 +1,34 @@
-﻿SELECT * FROM Blend
+﻿DROP Table Blend
 
-SELECT * FROM Ingredient
+SELECT * FROM Blend
+--Create new Table for Blend
 
-SELECT * FROM Spice
+Create Table [Blend](
+  id int not null identity primary key, 
+  name varchar (250),
+  ingredients varchar (250),
+  [price] decimal,
+  imageUrl varchar(250)
+)
 
-SELECT * FROM [Order]
+-- Blend Insert statements
 
-SELECT * FROM [User]
+Insert into [Blend](name, ingredients, price, imageUrl)
+Values ('Seafood Seasoning', 'Smoked Paprika or Sweet Paprika, Garlic Powder, Onion Powder,Thyme,Celery Seed,Cumin,Allspice,Salt',10,'https://www.acouplecooks.com/wp-content/uploads/2020/04/Seafood-Seasoning-007.jpg')
 
--- Order by Blend ID
--- Order by Blend
--- Track ingredients
--- 
+Insert into [Blend](name, ingredients, price, imageUrl)
+Values ('Taco Seasoning', 'Chili powder,Ground Cumin,Paprika,Garlic Powder,Onion powder,Dried oregano,Salt and Black pepper',10,'https://www.acouplecooks.com/wp-content/uploads/2018/07/Taco-Seasoning-003.jpg')
 
-SELECT Blend.name, Blend.weight, Blend.id, Ingredient.blendId, Ingredient.spiceId, 
-Spice.id, Spice.imageUrl, Spice.name, Spice.price, Spice.weight
-FROM Blend
-INNER JOIN Ingredient
-On Blend.id = Ingredient.blendId
-INNER JOIN Spice
-ON Ingredient.spiceId = Spice.id
-Order by Blend.id
+Insert into [Blend](name, ingredients, price, imageUrl)
+Values ('Greek Seasoning', 'Dried Oregano,Dried Dill,Garlic Powder,Onion Powder,Salt and Black Pepper',10,'https://www.acouplecooks.com/wp-content/uploads/2020/04/Greek-Seasoning-002.jpg')
+
+Insert into [Blend](name, ingredients, price, imageUrl)
+Values ('Cajun Seasoning', 'Paprika,Garlic Powder,Onion Powder,Thyme,Fennel Seed (optional),Cumin,Cayenne,Salt and Black Pepper',10,'https://www.acouplecooks.com/wp-content/uploads/2020/04/Fajita-Seasoning-003.jpg')
 
 
-SELECT Ingredient.blendId, Ingredient.spiceId,
-Spice.id, Spice.imageUrl, Spice.name, Spice.price, Spice.weight
-FROM Ingredient
-INNER JOIN Spice
-On Ingredient.spiceId = Spice.id
+Insert into [Blend](name, ingredients, price, imageUrl)
+Values ('Chilly Seasoning', 'Chili Powder (standard, not spicy),Cumin,Dried Oregano,Garlic Powder,Onion Powder',10,'https://www.acouplecooks.com/wp-content/uploads/2020/04/Chili-Seasoning-006.jpg')
+
+
+Insert into [Blend](name, ingredients, price, imageUrl)
+Values ('Chai Spices Blend', 'Cinnamon,Ginger,Cardamom,Black Pepper,Nutmeg,Cloves,Fennel Seed',10,'https://www.acouplecooks.com/wp-content/uploads/2020/09/Vegan-Chai-Latte-005.jpg')

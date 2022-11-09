@@ -119,11 +119,3 @@ export default function CartForm() {
         </>
     );
 }
-// CartForm.propTypes = {
-//   obj: PropTypes.shape({}),
-// };
-// CartForm.defaultProps = { obj: {} };
-
-// add a submit order button that closes the order and hides the update and delete options and writes
-//closed on the order card.
-//add buttons for delete

@@ -17,7 +17,6 @@ export default function BlendCard({ blend }) {
               ></img>
         <div className="card-body">
                   <h5 className="card-title">{blend.name}</h5>
-                  <p className="card-text">{blend.ingredients}</p>
           <button type="button" className="btn btn-info" onClick={handleInfo}>
             {" "}
             Info

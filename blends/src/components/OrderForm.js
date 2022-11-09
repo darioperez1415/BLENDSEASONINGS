@@ -14,7 +14,6 @@ const initialState = {
     phone: "",
     date: "",
     status: true,
-    delivery: "",
     userId: "",
     total: 0,
 };
@@ -52,13 +51,6 @@ export default function OrderForm({ obj = {} }) {
 
             [e.target.name]: e.target.value,
         }));
-    };
-    const handleCheck = (e) => {
-        if (checked) {
-            setChecked(false);
-        } else {
-            setChecked(true);
-        }
     };
     const handleClick = (e) => {
         e.preventDefault();
@@ -163,7 +155,7 @@ export default function OrderForm({ obj = {} }) {
                 />
             </div>
             <button type="submit" className="btn btn-primary">
-                {obj.id ? "Update Food" : "Add Food!"}
+                {obj.id ? "Update Blend" : "Add Blend!"}
             </button>
         </form>
     );

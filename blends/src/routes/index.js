@@ -14,7 +14,7 @@ export default function Routing() {
     return (
         <div>
             <Routes>
-                <Route exact path="/" element={<Home />}></Route>
+                <Route exact path="/Home" element={<Home />}></Route>
                 <Route exact path="/Login" element={<Login />}></Route>
                 <Route exact path="/Cart" element={<Cart />}></Route>
                 <Route exact path="/blend/:key" element={<BlendDetails />}></Route>
