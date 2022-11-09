@@ -1,9 +1,6 @@
 using BLENDSEASONINGS.Repos;
-
 var builder = WebApplication.CreateBuilder(args);
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
-// Add services to the container.
 
 // Added Cors Policy
 builder.Services.AddCors(options =>
@@ -18,11 +15,12 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddTransient<IOrderRepository, OrderRepository>();
-builder.Services.AddTransient<ISpiceRepository, SpiceRepository>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IBlendRepository, BlendRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
+//Auth
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -33,7 +31,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors(MyAllowSpecificOrigins);
+
+app.UseCors(builder => { builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin(); });
+
 app.UseAuthorization();
 
 app.MapControllers();

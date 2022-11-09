@@ -1,14 +1,12 @@
 ﻿using BLENDSEASONINGS.Models;
 using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
 
 namespace BLENDSEASONINGS.Repos
 {
-    public class SpiceRepository : ISpiceRepository
+    public class BlendRepository : IBlendRepository
     {
         private readonly IConfiguration _config;
-
-        public SpiceRepository(IConfiguration config)
+        public BlendRepository(IConfiguration config)
         {
             _config = config;
         }
@@ -20,7 +18,8 @@ namespace BLENDSEASONINGS.Repos
                 return new SqlConnection(_config.GetConnectionString("DefaultConnection"));
             }
         }
-        public List<Spice> GetAllSpices()
+
+        public List<Blend> GetAllBlends()
         {
             using (SqlConnection conn = Connection)
             {
@@ -28,68 +27,69 @@ namespace BLENDSEASONINGS.Repos
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"SELECT Id,
-                                               Name,
-                                               Weight,
-                                               Price,
-                                               ImageUrl
-                                        FROM[Spice]";
+                                                Name, 
+                                                Ingredients, 
+                                                Price, 
+                                                ImageUrl
+                                        FROM Blend";
 
                     SqlDataReader reader = cmd.ExecuteReader();
 
-                    List<Spice> spices = new List<Spice>();
+                    List<Blend> blends = new List<Blend>();
                     while (reader.Read())
                     {
-                        Spice spice = new Spice()
+                        Blend blend = new Blend()
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
                             Name = reader.GetString(reader.GetOrdinal("Name")),
-                            Weight = reader.GetDecimal(reader.GetOrdinal("Weight")),
-                            Price = reader.GetDecimal(reader.GetOrdinal("Price")),
+                            Ingredients = reader.GetString(reader.GetOrdinal("Ingredients")),
+                            Price =(int)reader.GetDecimal(reader.GetOrdinal("Price")),
                             ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl"))
                         };
-                        spices.Add(spice);
+                        blends.Add(blend);
                     }
                     reader.Close();
-                    return spices;
+                    return blends;
                 }
             }
         }
 
-        public Spice GetSpiceById(int id)
+        public Blend GetBlendById(int id)
         {
             using (SqlConnection conn = Connection)
             {
                 conn.Open();
 
-                Spice spice = null;
+                Blend blend = null;
 
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"SELECT Id,
-                                               Name,
-                                               Weight, 
-                                               Price, 
-                                               ImageUrl
-                                        FROM Spice
+                                                Name, 
+                                                Ingredients, 
+                                                Price, 
+                                                ImageUrl
+                                        FROM Blend
                                         WHERE Id = @Id";
+
                     cmd.Parameters.AddWithValue("@Id", id);
 
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     if (reader.Read())
                     {
-                        spice = new Spice()
+                        blend = new Blend()
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
                             Name = reader.GetString(reader.GetOrdinal("Name")),
-                            Weight = reader.GetDecimal(reader.GetOrdinal("Weight")),
-                            Price = reader.GetDecimal(reader.GetOrdinal("Price")),
+                            Ingredients = reader.GetString(reader.GetOrdinal("Ingredients")),
+                            Price = (int)reader.GetDecimal(reader.GetOrdinal("Price")),
                             ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl"))
                         };
                     }
                     reader.Close();
                 }
-                return spice;
+                return blend;
             }
         }
     }

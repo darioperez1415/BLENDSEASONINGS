@@ -7,32 +7,32 @@ namespace BLENDSEASONINGS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SpiceController : ControllerBase
+    public class BlendController : Controller
     {
-        private readonly ISpiceRepository _spiceRepository;
-        
-        public SpiceController(ISpiceRepository spiceRepository)
+        private readonly IBlendRepository _blendRepo;
+
+        public BlendController(IBlendRepository blendRepository)
         {
-            _spiceRepository = spiceRepository;
+            _blendRepo = blendRepository;
         }
         [HttpGet]
         public IActionResult Index()
         {
-            List<Spice> spices = _spiceRepository.GetAllSpices();
-            if(spices == null) return NotFound();
-            return Ok(spices);
+            List<Blend> blends = _blendRepo.GetAllBlends();
+            if (blends == null) return NotFound();
+            return Ok(blends);
         }
 
         [HttpGet("{id}")]
-
         public IActionResult Details(int id)
         {
-            var match = _spiceRepository.GetSpiceById(id);
+            var match = _blendRepo.GetBlendById(id);
 
             if (match == null)
             {
                 return NotFound();
             }
+
             return Ok(match);
         }
     }

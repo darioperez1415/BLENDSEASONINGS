@@ -7,7 +7,7 @@ namespace BLENDSEASONINGS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : Controller
     {
         private readonly IUserRepository _userRepo;
 
@@ -52,5 +52,7 @@ namespace BLENDSEASONINGS.Controllers
                 return Ok(newUser);
             }
         }
+
+
     }
 }
